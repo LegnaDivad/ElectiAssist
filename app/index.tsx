@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const RegistrationScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  // Estados para controlar el foco de cada campo de texto
-  const [nameFocused, setNameFocused] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
-  const [passwordFocused, setPasswordFocused] = useState(false);
-
   const handleRegistration = () => {
     console.log('Name:', name);
     console.log('Email:', email);
@@ -23,47 +18,32 @@ const RegistrationScreen = () => {
       <Text style={styles.title}>Registrate</Text>
       <Text style={styles.legend}>Date de alta llenando los siguientes datos</Text>
 
-      <Text style={styles.label}>Nombre completo</Text>
+      <Text style={styles.Subtitle}>Nombre completo</Text>
       <TextInput
-        onFocus={() => setNameFocused(true)}
-        onBlur={() => setNameFocused(false)}
-        style={[
-          styles.input,
-          { borderColor: nameFocused ? 'black' : '#ccc' }
-        ]}
+        style={styles.input}
         value={name}
         onChangeText={setName}
         placeholder="Francisco Pérez"
       />
 
-      <Text style={styles.label}>Email</Text>
+      <Text style={styles.Subtitle}>Email</Text>
       <TextInput
-        onFocus={() => setEmailFocused(true)}
-        onBlur={() => setEmailFocused(false)}
-        style={[
-          styles.input,
-          { borderColor: emailFocused ? 'black' : '#ccc' }
-        ]}
+        style={styles.input}
         value={email}
         onChangeText={setEmail}
         placeholder="hey@tueemail.com"
       />
 
-      <Text style={styles.label}>Contraseña</Text>
+      <Text style={styles.Subtitle}>Contraseña</Text>
       <TextInput
-        onFocus={() => setPasswordFocused(true)}
-        onBlur={() => setPasswordFocused(false)}
-        style={[
-          styles.input,
-          { borderColor: passwordFocused ? 'black' : '#ccc' }
-        ]}
+        style={styles.input}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
         placeholder="Ingresa una contraseña"
       />
 
-<TouchableOpacity onPress={handleRegistration} style={styles.buttonContainer}>
+      <TouchableOpacity onPress={handleRegistration} style={styles.buttonContainer}>
         <LinearGradient
           colors={['#435058', '#4A5861', '#687C88', '#758C9A', '#91ADBE']}
           locations={[0, 0.47, 0.69, 0.8, 1]}
@@ -72,6 +52,7 @@ const RegistrationScreen = () => {
           <Text style={styles.buttonText}>Crear Cuenta</Text>
         </LinearGradient>
       </TouchableOpacity>
+
       <Text style={styles.footer}>¿Ya tienes cuenta? Inicia Sesión</Text>
     </View>
   );
@@ -80,20 +61,40 @@ const RegistrationScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#848E8C',
     padding: 20,
     justifyContent: 'center',
+    paddingLeft: 40,
+    paddingRight: 40,
+
+  },
+
+  Subtitle:{
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    paddingBottom: 15,
+    paddingLeft: 10,
+    paddingRight: 10,
+
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
+    color: 'white',
+    position: 'absolute',
+    top: 120,
+    left: 50,
   },
   legend: {
-    paddingBottom: 20,
-    paddingTop: 0,
-    fontSize: 12,
+    fontSize: 17,
     fontWeight: '300',
     marginBottom: 20,
+    color: 'white',
+    position: 'absolute',
+    top: 160,
+    left: 50,
+    
   },
   label: {
     fontSize: 16,
@@ -101,23 +102,20 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderWidth: 2, 
+    borderWidth: 2,
     borderColor: '#DCF763',
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
   },
-  button: {
-    backgroundColor: '#007AFF',
-    borderRadius: 5,
-    paddingVertical: 10,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
   buttonContainer: {
+    position: 'absolute',
+    bottom: 100,
+    left: 40,
+    right: 40,
     borderRadius: 5,
     overflow: 'hidden',
-    marginBottom: 20,
+    marginBottom: 15,
   },
   gradientButton: {
     paddingVertical: 10,
@@ -126,10 +124,15 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   footer: {
+    position: 'absolute',
+    color: 'white',
+    bottom: 70,
+    left: 40,
+    right: 40,
     fontSize: 14,
     textAlign: 'center',
   },
