@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   //   textAlign: "center",
   // },
   footer: {
-    backgroundColor: "red",
+    //backgroundColor: "red",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

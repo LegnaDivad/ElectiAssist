@@ -73,7 +73,7 @@ const IniciarSesion = () => {
         </LinearGradient> */}
 
         <TouchableOpacity
-          onPress={navigation.navigate("IniciarSesion")}
+          onPress={navigation.navigate("Main")}
           style={styles.buttonContainer}
         >
           <LinearGradient

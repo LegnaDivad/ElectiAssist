@@ -7,8 +7,18 @@ import { NavigationContainer } from "@react-navigation/native";
 //importacion de ventanas
 import Registro from "../scenes/Registro";
 import IniciarSesion from "../scenes/IniciarSesion";
+import Main from "../scenes/mainScenes/Main";
 
 const Stack = createStackNavigator();
+const Tab = createStackNavigator();
+
+function MainTabs() {
+  <Tab.Navigator>
+    <Tab.Screen name="Registro" component={Registro} />
+    <Tab.Screen name="IniciarSesion" component={IniciarSesion} />
+    <Tab.Screen name="Main" component={Main} />
+  </Tab.Navigator>;
+}
 
 export default function index() {
   return (
@@ -22,6 +32,11 @@ export default function index() {
         <Stack.Screen
           name="IniciarSesion"
           component={IniciarSesion}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Main"
+          component={Main}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
