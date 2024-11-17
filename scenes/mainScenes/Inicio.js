@@ -57,14 +57,14 @@ const Inicio = () => {
   const DATA = [
     {
       id: 1,
-      img: require("../../assets/pictures/jonhFKennedy.jpg"),
+      img: "https://images.unsplash.com/photo-1541876788-2221e585da7f?q=80&w=2034&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Candidatos",
       icon: "bookmarks",
       key: "Candidatos",
     },
     {
       id: 2,
-      img: require("../../assets/pictures/congreso.jpg"),
+      img: "https://letraslibres.com/wp-content/uploads/2019/07/congreso.jpg",
       title: "Legajos",
       key: "Legajos",
       icon: "book-sharp",
@@ -83,7 +83,7 @@ const Inicio = () => {
       }}
     >
       <TouchableOpacity onPress={() => setVista(key)} style={{ width: "100%" }}>
-        <ImageBackground source={img} style={styles.image}>
+        <ImageBackground source={{ uri: img }} style={styles.image}>
           <View
             style={{
               width: "90%",
@@ -154,7 +154,9 @@ const Inicio = () => {
         >
           <TouchableOpacity onPress={() => console.log("Perfil")}>
             <Image
-              source={require("@/assets/pictures/profile.jpg")}
+              source={{
+                uri: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              }}
               style={{
                 width: 50,
                 height: 50,
