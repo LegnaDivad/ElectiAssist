@@ -50,30 +50,9 @@ const IniciarSesion = () => {
             placeholder="Ingresa una contraseña"
           />
         </View>
-        {/* <View
-          style={{
-            alignItems: "center",
-            width: "70%",
-            height: "4%",
-            marginLeft: "14%",
-          }}
-        > */}
-        {/* <LinearGradient
-          colors={["#4A6572", "#647C90"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradientBackground}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Registro")}
-            style={styles.btnRegister}
-          >
-            <Text style={styles.btnInicioTxt}>Iniciar sesión</Text>
-          </TouchableOpacity>
-        </LinearGradient> */}
 
         <TouchableOpacity
-          onPress={navigation.navigate("Main")}
+          onPress={() => navigation.navigate("MainTabs")}
           style={styles.buttonContainer}
         >
           <LinearGradient
@@ -84,8 +63,6 @@ const IniciarSesion = () => {
             <Text style={styles.btnInicioTxt}>Iniciar Sesión</Text>
           </LinearGradient>
         </TouchableOpacity>
-
-        {/* </View> */}
 
         <View style={styles.footer}>
           <Text style={styles.footerTxt}>¿Aún no tienes cuenta?</Text>

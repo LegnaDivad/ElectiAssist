@@ -1,5 +1,4 @@
 //importtacion de librerias
-import { Text, StyleSheet, View } from "react-native";
 import React, { Component } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,30 +12,35 @@ const Stack = createStackNavigator();
 const Tab = createStackNavigator();
 
 function MainTabs() {
-  <Tab.Navigator>
-    <Tab.Screen name="Registro" component={Registro} />
-    <Tab.Screen name="IniciarSesion" component={IniciarSesion} />
-    <Tab.Screen name="Main" component={Main} />
-  </Tab.Navigator>;
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Main"
+        component={Main}
+        options={{ headerShown: false }}
+      />
+    </Tab.Navigator>
+  );
 }
 
 export default function index() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Registro">
-        <Stack.Screen
-          name="Registro"
-          component={Registro}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator>
         <Stack.Screen
           name="IniciarSesion"
           component={IniciarSesion}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Main"
-          component={Main}
+          name="Registro"
+          component={Registro}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="MainTabs"
+          component={MainTabs}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
