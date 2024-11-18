@@ -5,7 +5,6 @@ import { Ionicons } from "@expo/vector-icons";
 import Asistencia from "./Asistencia";
 import Inicio from "./Inicio";
 import Perfil from "./Perfil";
-import Candidatos from "../options/Candidatos";
 
 const Tab = createBottomTabNavigator();
 

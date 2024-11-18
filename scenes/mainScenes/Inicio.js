@@ -50,28 +50,31 @@ import {
 import { Ionicons } from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
-const { width } = Dimensions.get("screen");
-
 const Inicio = () => {
-  const [vista, setVista] = useState("Inicio");
+  const navigation = useNavigation();
+
   const DATA = [
     {
       id: 1,
       img: "https://images.unsplash.com/photo-1541876788-2221e585da7f?q=80&w=2034&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Candidatos",
       icon: "bookmarks",
-      key: "Candidatos",
     },
     {
       id: 2,
       img: "https://letraslibres.com/wp-content/uploads/2019/07/congreso.jpg",
-      title: "Legajos",
-      key: "Legajos",
+      title: "Casillas",
+      icon: "book-sharp",
+    },
+    {
+      id: 3,
+      img: "https://blogs.iadb.org/conocimiento-abierto/wp-content/uploads/sites/10/2018/01/Vota-Inteligente-banner-6.png",
+      title: "Procesos",
       icon: "book-sharp",
     },
   ];
 
-  const Item = ({ img, title, key }) => (
+  const Item = ({ img, title }) => (
     <View
       style={{
         justifyContent: "center",
@@ -82,7 +85,10 @@ const Inicio = () => {
         borderRadius: 20,
       }}
     >
-      <TouchableOpacity onPress={() => setVista(key)} style={{ width: "100%" }}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(title)}
+        style={{ width: "100%" }}
+      >
         <ImageBackground source={{ uri: img }} style={styles.image}>
           <View
             style={{

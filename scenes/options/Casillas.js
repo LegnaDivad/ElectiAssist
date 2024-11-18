@@ -10,7 +10,7 @@ import React from "react";
 
 const { width } = Dimensions.get("screen");
 
-const Candidatos = () => {
+const Casillas = () => {
   const DATA = [
     {
       id: 1,
@@ -67,7 +67,7 @@ const Candidatos = () => {
   return (
     <View style={styles.mainCont}>
       <View style={styles.titleCont}>
-        <Text style={styles.title}>Candidatos</Text>
+        <Text style={styles.title}>Casillas</Text>
       </View>
       <FlatList
         data={DATA}
@@ -84,7 +84,7 @@ const Candidatos = () => {
   );
 };
 
-export default Candidatos;
+export default Casillas;
 
 const styles = StyleSheet.create({
   mainCont: {

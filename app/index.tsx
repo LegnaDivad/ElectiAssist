@@ -7,6 +7,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import Registro from "../scenes/Registro";
 import IniciarSesion from "../scenes/IniciarSesion";
 import Main from "../scenes/mainScenes/Main";
+import Candidatos from "@/scenes/options/Candidatos";
+import Casillas from "@/scenes/options/Casillas";
+import Procesos from "@/scenes/options/Procesos";
 
 const Stack = createStackNavigator();
 const Tab = createStackNavigator();
@@ -41,6 +44,23 @@ export default function index() {
         <Stack.Screen
           name="MainTabs"
           component={MainTabs}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Candidatos"
+          component={Candidatos}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Casillas"
+          component={Casillas}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Procesos"
+          component={Procesos}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
