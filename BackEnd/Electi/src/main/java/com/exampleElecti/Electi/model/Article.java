@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class Process {
+public class Article {
 
     @Id
     @Column(name = "id")
@@ -25,9 +25,9 @@ public class Process {
     @Column(name = "user_id")
     private String user_id;
 
-    public Process(){}
+    public Article(){}
 
-    public Process(String id_, String title_, String user_id_){
+    public Article(String id_, String title_, String user_id_){
         this.id = id_;
         this.title = title_;
         this.user_id = user_id_;
