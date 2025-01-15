@@ -1,10 +1,7 @@
 package com.exampleElecti.Electi.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 /*
  * @Author: Cervantes Juan
@@ -12,12 +9,12 @@ import jakarta.persistence.Table;
  * */
 
 @Entity
-@Table
+@Table(name = "USER_VOTE")
 public class User_Vote {
 
     @Id
-    @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "user_id")
     private String user_id;
@@ -39,7 +36,7 @@ public class User_Vote {
 
     public User_Vote(){}
 
-    public User_Vote(String id_, String user_id_, String presidency_id_, String deputy_id_, String mayor_id_, String governor_id_, String senator_id_){
+    public User_Vote(Long id_, String user_id_, String presidency_id_, String deputy_id_, String mayor_id_, String governor_id_, String senator_id_){
         this.id = id_;
         this.user_id = user_id_;
         this.presidency_id = presidency_id_;
@@ -49,11 +46,11 @@ public class User_Vote {
         this.senator_id = senator_id_;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

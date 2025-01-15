@@ -1,10 +1,9 @@
 package com.exampleElecti.Electi.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 /*
  * @Author: Cervantes Juan
@@ -13,11 +12,13 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table
+@Table(name = "CANDIDATE")
 public class Candidate {
+
+    /********* ATTRIBUTES*********/
     @Id
-    @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -28,27 +29,34 @@ public class Candidate {
     @Column(name = "level")
     private String level;
 
-    @Column(name = "political_party")
-    private String political_party;
-
     @Column(name = "position")
     private String position;
 
+    /********* RELATIONS*********/
+    @OneToMany(mappedBy = "candidate")
+    public List<Proposal> proposalList;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_political_party_id", nullable = false)
+    private Political_Party political_party;
+
+
+    /********* CONSTRUCTOR*********/
     public Candidate(){}
-    public Candidate(String id_, String name_, Integer age_, String level_, String political_party_, String position_){
+    public Candidate(Long id_, String name_, Integer age_, String level_, String position_){
         this.id  = id_;
         this.name = name_;
         this.age = age_;
         this.level = level_;
-        this.political_party = political_party_;
         this.position = position_;
     }
 
-    public String getId() {
+    /********* GETTERS&SETTERS*********/
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -76,14 +84,6 @@ public class Candidate {
         this.level = level;
     }
 
-    public String getPolitical_party() {
-        return political_party;
-    }
-
-    public void setPolitical_party(String political_party) {
-        this.political_party = political_party;
-    }
-
     public String getPosition() {
         return position;
     }
@@ -91,4 +91,5 @@ public class Candidate {
     public void setPosition(String position) {
         this.position = position;
     }
+
 }

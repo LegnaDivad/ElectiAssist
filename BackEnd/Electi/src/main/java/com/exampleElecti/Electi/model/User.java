@@ -1,10 +1,9 @@
 package com.exampleElecti.Electi.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 /*
  * @Author: Cervantes Juan
@@ -12,12 +11,13 @@ import jakarta.persistence.Table;
  * */
 
 @Entity
-@Table
+@Table(name = "USER")
 public class User {
 
+    /********* ATTRIBUTES*********/
     @Id
-    @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -37,22 +37,35 @@ public class User {
     @Column(name = "age")
     private Integer age;
 
+    @Column(name = "curp")
+    private String curp;
+
+    /********* RELATIONS*********/
+    @OneToMany(mappedBy = "user")
+    private List<Chatbot_Interaction> chatbotInteractionList;
+
+    @OneToMany(mappedBy = "user")
+    private List<Article> articleList;
+
+
+    /********* CONSTRUCTOR*********/
     public User(){}
-    public User(String id_, String name_, String email_, String password_, String section_, String polling_station_, Integer age_){
+    public User(Long id_, String name_, String email_, String password_, String section_, String polling_station_, Integer age_, String curp_){
         this.id = id_;
         this.name = name_;
         this.email = email_;
         this.password = password_;
         this.section = section_;
         this.polling_station = polling_station_;
-        this.age = age_;
+        this.curp = curp_;
     }
 
-    public String getId() {
+    /********* GETTERS&SETTERS*********/
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -102,5 +115,13 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getCurp(){
+        return curp;
+    }
+
+    public void setCurp(String curp_){
+        this.curp = curp_;
     }
 }

@@ -1,23 +1,23 @@
 package com.exampleElecti.Electi.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 /*
  * @Author: Cervantes Juan
  * @Date: 1/13/2025
  * */
 
-@Table
 @Entity
+@Table(name = "POLITICAL_PARTY")
 public class Political_Party {
 
+    /********* ATTRIBUTES*********/
     @Id
-    @Column(name ="id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name ="name")
     private String name;
@@ -25,19 +25,24 @@ public class Political_Party {
     @Column(name ="image_url")
     private String image_url;
 
-    public Political_Party(){}
+    /********* RELATIONS*********/
+    @OneToMany(mappedBy = "political_party")
+    public List<Candidate> candidateList;
 
-    public Political_Party(String id_, String name_, String image_url_){
+    /********* CONSTRUCTOR*********/
+    public Political_Party(){}
+    public Political_Party(Long id_, String name_, String image_url_){
         this.id = id_;
         this.name = name_;
         this.image_url = image_url_;
     }
 
-    public String getId() {
+    /********* GETTERS&SETTERS*********/
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

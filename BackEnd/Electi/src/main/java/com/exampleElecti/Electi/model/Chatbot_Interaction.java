@@ -1,9 +1,6 @@
 package com.exampleElecti.Electi.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -14,12 +11,12 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table
+@Table(name = "CHATBOT_INTERACTION")
 public class Chatbot_Interaction {
 
     @Id
-    @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "question")
     private String question;
@@ -30,23 +27,24 @@ public class Chatbot_Interaction {
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "user_id")
-    private String user_id;
+    @ManyToOne
+    @JoinColumn(name = "fk_user_id", nullable = false)
+    private User user;
 
     public Chatbot_Interaction(){}
 
-    public Chatbot_Interaction(String id_, String question_, String response_, LocalDate date_){
+    public Chatbot_Interaction(Long id_, String question_, String response_, LocalDate date_){
         this.id = id_;
         this.question = question_;
         this.response = response_;
         this.date = date_;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -74,11 +72,5 @@ public class Chatbot_Interaction {
         this.date = date;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
 }

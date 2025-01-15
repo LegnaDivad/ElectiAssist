@@ -1,10 +1,7 @@
 package com.exampleElecti.Electi.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 /*
  * @Author: Cervantes Juan
@@ -12,12 +9,13 @@ import jakarta.persistence.Table;
  * */
 
 @Entity
-@Table
+@Table(name = "ARTICLE")
 public class Article {
 
+    /********* ATTRIBUTES*********/
     @Id
-    @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "title")
     private String title;
@@ -25,19 +23,27 @@ public class Article {
     @Column(name = "user_id")
     private String user_id;
 
+    /********* RELATIONS*********/
+    @ManyToOne
+    @JoinColumn(name = "fk_user_id", nullable = false)
+    private User user;
+
+
+    /********* CONSTRUCTOR*********/
     public Article(){}
 
-    public Article(String id_, String title_, String user_id_){
+    public Article(Long id_, String title_, String user_id_){
         this.id = id_;
         this.title = title_;
         this.user_id = user_id_;
     }
 
-    public String getId() {
+    /********* GETTERS&SETTERS*********/
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
