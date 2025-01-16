@@ -12,40 +12,48 @@ import jakarta.persistence.*;
 @Table(name = "USER_VOTE")
 public class User_Vote {
 
+    /********* ATTRIBUTES*********/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private String user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    private User user;
 
-    @Column(name = "presidency_id")
-    private String presidency_id;
+    @ManyToOne
+    @JoinColumn(name = "presidency_id")
+    private Candidate presidency;
 
-    @Column(name = "deputy_id")
-    private String deputy_id;
+    @ManyToOne
+    @JoinColumn(name = "deputy_id")
+    private Candidate deputy;
 
-    @Column(name = "mayor_id")
-    private String mayor_id;
+    @ManyToOne
+    @JoinColumn(name = "mayor_id")
+    private Candidate mayor;
 
-    @Column(name = "governor_id")
-    private String governor_id;
+    @ManyToOne
+    @JoinColumn(name = "governor_id")
+    private Candidate governor;
 
-    @Column(name = "senator_id")
-    private String senator_id;
+    @ManyToOne
+    @JoinColumn(name = "senator_id")
+    private Candidate senator;
 
+
+    /********* CONSTRUCTOR*********/
     public User_Vote(){}
 
-    public User_Vote(Long id_, String user_id_, String presidency_id_, String deputy_id_, String mayor_id_, String governor_id_, String senator_id_){
-        this.id = id_;
-        this.user_id = user_id_;
-        this.presidency_id = presidency_id_;
-        this.deputy_id = deputy_id_;
-        this.mayor_id = mayor_id_;
-        this.governor_id = governor_id_;
-        this.senator_id = senator_id_;
+    public User_Vote(User user_, Candidate presidency_, Candidate deputy_, Candidate mayor_, Candidate governor_, Candidate senator_){
+        this.presidency = presidency_;
+        this.deputy = deputy_;
+        this.mayor = mayor_;
+        this.governor = governor_;
+        this.senator = senator_;
     }
 
+    /********* GETTERS&SETTERS*********/
     public Long getId() {
         return id;
     }
@@ -54,51 +62,51 @@ public class User_Vote {
         this.id = id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getPresidency_id() {
-        return presidency_id;
+    public Candidate getPresidency() {
+        return presidency;
     }
 
-    public void setPresidency_id(String presidency_id) {
-        this.presidency_id = presidency_id;
+    public void setPresidency(Candidate presidency) {
+        this.presidency = presidency;
     }
 
-    public String getDeputy_id() {
-        return deputy_id;
+    public Candidate getDeputy() {
+        return deputy;
     }
 
-    public void setDeputy_id(String deputy_id) {
-        this.deputy_id = deputy_id;
+    public void setDeputy(Candidate deputy) {
+        this.deputy = deputy;
     }
 
-    public String getGovernor_id() {
-        return governor_id;
+    public Candidate getMayor() {
+        return mayor;
     }
 
-    public void setGovernor_id(String governor_id) {
-        this.governor_id = governor_id;
+    public void setMayor(Candidate mayor) {
+        this.mayor = mayor;
     }
 
-    public String getMayor_id() {
-        return mayor_id;
+    public Candidate getGovernor() {
+        return governor;
     }
 
-    public void setMayor_id(String mayor_id) {
-        this.mayor_id = mayor_id;
+    public void setGovernor(Candidate governor) {
+        this.governor = governor;
     }
 
-    public String getSenator_id() {
-        return senator_id;
+    public Candidate getSenator() {
+        return senator;
     }
 
-    public void setSenator_id(String senator_id) {
-        this.senator_id = senator_id;
+    public void setSenator(Candidate senator) {
+        this.senator = senator;
     }
 }

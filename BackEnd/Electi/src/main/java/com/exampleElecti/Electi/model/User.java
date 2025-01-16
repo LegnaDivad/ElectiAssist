@@ -4,6 +4,7 @@ package com.exampleElecti.Electi.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 /*
  * @Author: Cervantes Juan
@@ -46,6 +47,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Article> articleList;
+
+    @OneToMany(mappedBy = "user")
+    private Set<User_Vote> userVotes;
 
 
     /********* CONSTRUCTOR*********/
@@ -123,5 +127,29 @@ public class User {
 
     public void setCurp(String curp_){
         this.curp = curp_;
+    }
+
+    public List<Chatbot_Interaction> getChatbotInteractionList() {
+        return chatbotInteractionList;
+    }
+
+    public void setChatbotInteractionList(List<Chatbot_Interaction> chatbotInteractionList) {
+        this.chatbotInteractionList = chatbotInteractionList;
+    }
+
+    public List<Article> getArticleList() {
+        return articleList;
+    }
+
+    public void setArticleList(List<Article> articleList) {
+        this.articleList = articleList;
+    }
+
+    public Set<User_Vote> getUserVotes() {
+        return userVotes;
+    }
+
+    public void setUserVotes(Set<User_Vote> userVotes) {
+        this.userVotes = userVotes;
     }
 }
