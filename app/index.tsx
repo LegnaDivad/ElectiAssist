@@ -41,6 +41,11 @@ export default function index() {
           component={Main}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Registro"
+          component={Registro}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
