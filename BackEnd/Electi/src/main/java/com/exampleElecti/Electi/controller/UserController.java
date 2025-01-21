@@ -5,9 +5,9 @@ import com.exampleElecti.Electi.model.ApiResponse;
 import com.exampleElecti.Electi.model.LoginRequest;
 import com.exampleElecti.Electi.model.User;
 import com.exampleElecti.Electi.repository.UserRepository;
+import com.exampleElecti.Electi.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +24,7 @@ import java.util.Optional;
 public class UserController {
 
     private final UserRepository userRepository;//Repository of all the users
+    private JwtService jwtService;
 
     @Autowired
     public UserController(UserRepository userRepository) {//Constructor for the repository
@@ -45,12 +46,13 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
 
         Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
-        if(userOptional.isPresent()){//Checks if the user its in the repository
+        if(userOptional.isPresent()){//Checks if the user it's in the repository
             User user = userOptional.get();
             if(user.getPassword().equals(loginRequest.getPassword())){//If the password matches
-                return ResponseEntity.ok(new ApiResponse("Inicio de sesion exitoso", user));//return STATUS 200 OK
+                String token = jwtService.generateToken(loginRequest.getEmail());
+                return ResponseEntity.ok(new ApiResponse("Inicio de sesion exitoso", user, token));//return STATUS 200 OK
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse("Contrasena incorrecta, intenta de nuevo"));
+                return ResponseEntity.status( HttpStatus.UNAUTHORIZED).body(new ApiResponse("Contrasena incorrecta, intenta de nuevo"));
             }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse("No se encontro el correo, ingresa de nuevo el correo correcto"));
@@ -73,6 +75,7 @@ public class UserController {
         userToInsert.setPassword(user.getPassword());
         userToInsert.setSection((user.getSection()));
         userToInsert.setAge(userToInsert.getAge());
+        userToInsert.setCurp(userToInsert.getCurp());
 
         userRepository.save(userToInsert);//Save it to the repository
 
@@ -80,6 +83,22 @@ public class UserController {
                 new ApiResponse("Usuario creado con exito", userToInsert),
                 HttpStatus.CREATED //STATUS 201
         );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User userDetails){
+        return userRepository.findById(id)//In search of the user
+                .map(user -> {//Creates a new user setting the RequestBody details
+                    user.setName(userDetails.getName());
+                    user.setEmail(userDetails.getEmail());
+                    user.setAge(userDetails.getAge());
+                    user.setPassword(userDetails.getPassword());
+                    user.setSection(userDetails.getSection());
+                    user.setPolling_station(userDetails.getPolling_station());
+                    user.setCurp(userDetails.getCurp());
+                    User updatedUser = userRepository.save(user);//Saves it to the repository
+                    return ResponseEntity.ok().body(updatedUser);//Return ok + updatedUser
+                }).orElse(ResponseEntity.notFound().build());//Return not found 404 STATUS HTTP
     }
 
     @DeleteMapping("/{id}")
