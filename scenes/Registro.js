@@ -18,10 +18,36 @@ const RegistrationScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegistration = () => {
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
+  const handleRegistration = async () => {
+    if(!email || !password || !name){
+      alert("Ingresa el correo y contrasena correctamente");
+      return;
+    }
+
+    try {
+
+      const response = await fetch("http://localhost:8080/api/user/register", {
+        method:"POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email, password, name}),
+      });
+
+      const data = await response.json();
+      if(response.ok){
+        alert("Registro de usuario exitoso");
+        navigation.navigate("Main");
+      } else {
+        alert(data.message || "Error al registrar");
+      }
+
+    } catch (error) {
+      console.log(error);
+      alert("Error al registrarse")
+    }
+
+
   };
 
   return (
