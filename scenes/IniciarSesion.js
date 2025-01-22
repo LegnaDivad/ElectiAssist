@@ -18,6 +18,38 @@ const IniciarSesion = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handeLogin = async () => {
+    if(!email || !password){
+      alert("Ingresa el correo y contrasena correctamente");
+      return;
+    }
+
+    try {
+
+      const response = await fetch("http://localhost:8080/api/user/login", {
+        method:"POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email, password}),
+      });
+
+      const data = await response.json();
+      if(response.ok){
+        alert("Inicio de sesion exitoso");
+        navigation.navigate("Main");
+      } else {
+        alert(data.message || "Error al iniciar sesion");
+      }
+
+    } catch(error) {
+      console.error(error);
+      alert("Error en la conexion");
+    }
+
+  }
+
+
   return (
     <View style={styles.Main}>
       <Image
@@ -73,7 +105,7 @@ const IniciarSesion = () => {
         </LinearGradient> */}
 
         <TouchableOpacity
-          onPress={navigation.navigate("Main")}
+          onPress={handeLogin}
           style={styles.buttonContainer}
         >
           <LinearGradient

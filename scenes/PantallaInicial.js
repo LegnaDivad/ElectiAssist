@@ -74,7 +74,7 @@ const ElectiAssist = () => {
           <Animated.View style={[styles.dot, { opacity: dot3 }]} />
         </View>
         {/* Botón de Flecha Estilizada */}
-        <TouchableOpacity style={styles.arrowButton} onPress={() => navigation.navigate('Registro')}>
+        <TouchableOpacity style={styles.arrowButton} onPress={() => navigation.navigate('IniciarSesion')}>
           <Icon name="arrow-forward-ios" size={24} color="#435058" />
         </TouchableOpacity>
       </View>
