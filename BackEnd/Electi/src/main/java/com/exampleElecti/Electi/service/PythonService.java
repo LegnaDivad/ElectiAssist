@@ -8,15 +8,32 @@ package com.exampleElecti.Electi.service;
 *
 * */
 
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.concurrent.CompletableFuture;
 
+/*
+*
+* @Author: Juan Cervantes
+* @Date: 1/27/2025
+* @About: Executes the python script stored in the server.
+*
+* */
+
+@EnableAsync
 @Service
 public class PythonService {
+
+    @Async//Using asyncronous tasks
+    public CompletableFuture<String> executePythonAsync(String data, String path){//Enables the future component
+        return CompletableFuture.supplyAsync(() -> phePython(data, path));//Does not return when executed
+    }
 
     public String phePython(String data, String path){
         try{

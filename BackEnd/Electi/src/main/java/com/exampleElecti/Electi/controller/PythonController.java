@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/python")
@@ -22,9 +23,9 @@ public class PythonController {
     }
 
     @PostMapping("/phe")
-    public String processPhe(@RequestBody Map<String, String> request){
+    public CompletableFuture<String> processPhe(@RequestBody Map<String, String> request){
         String data = request.get("data");
-        return pythonService.phePython(data, "C://Users//juanj//Documents//UDG//Servicio//PruebaPython//main.py");
+        return pythonService.executePythonAsync(data, "src/main/resources/scripts/script.py");
     }
 
 
