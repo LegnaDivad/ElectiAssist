@@ -4,6 +4,7 @@ import com.exampleElecti.Electi.service.JwtService;
 import jakarta.servlet.ServletException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 * @Date: 1/21/2025
 * @About: Checks and filters the given token
 * */
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /********* ATTRIBUTES*********/
