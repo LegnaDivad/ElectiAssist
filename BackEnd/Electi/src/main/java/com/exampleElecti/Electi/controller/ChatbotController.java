@@ -25,17 +25,17 @@ public class ChatbotController {
 
     @PostMapping("/send")
     public ResponseEntity<Map<String, String>> sendMessage(@RequestBody Map<String, String> request) {
-        // Extrae el mensaje del usuario del cuerpo de la solicitud
+        //Take the message from the JSON
         String userMessage = request.get("message");
 
-        // Obtiene la respuesta del chatbot a través del servicio
+        //Gets the response from the chatbot
         String chatbotResponse = chatbotService.getChatbotResponse(userMessage);
 
-        // Crea un JSON con la respuesta
+        //Creates a JSON with the response
         Map<String, String> response = new HashMap<>();
         response.put("response", chatbotResponse);
 
-        // Devuelve la respuesta en formato JSON
+        //Returns the response
         return ResponseEntity.ok(response);
     }
 }

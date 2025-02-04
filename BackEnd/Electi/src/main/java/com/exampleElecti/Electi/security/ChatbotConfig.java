@@ -1,14 +1,18 @@
 package com.exampleElecti.Electi.security;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Service
+@Configuration
 public class ChatbotConfig {
+    private final Dotenv dotenv;
 
-    @Value("${chatbot.api.key}")
-    private String apiKey;
+    public ChatbotConfig(Dotenv dotenv) {
+        this.dotenv = dotenv;
+    }
 
+    @Bean
     public String getApiKey() {
-        return apiKey;
+        return dotenv.get("MY_API_KEY");
     }
 }
