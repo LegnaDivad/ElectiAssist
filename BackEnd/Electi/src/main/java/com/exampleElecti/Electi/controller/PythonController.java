@@ -1,13 +1,9 @@
 package com.exampleElecti.Electi.controller;
 
-
 import com.exampleElecti.Electi.service.PythonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -23,8 +19,9 @@ public class PythonController {
     }
 
     @PostMapping("/phe")
-    public CompletableFuture<String> processPhe(@RequestBody Map<String, String> request){
-        String data = request.get("data");
+    public CompletableFuture<String> processPhe(@RequestBody Map<String, List<Integer>> request){
+        List<Integer> data = request.get("data");
+        System.out.println(data);
         return pythonService.executePythonAsync(data, "src/main/resources/scripts/script.py");
     }
 

@@ -28,7 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/user/login", "api/user", "api/chatbot/send").permitAll()//Allow public to login
+                        .requestMatchers("/api/user/login", "/api/user", "/api/chatbot/send", "/api/python/phe").permitAll()//Allow public to login
                         .anyRequest().authenticated()//Secure the rest of the endpoints
                 )
                 .sessionManagement(session -> session
@@ -37,7 +37,6 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);//Jwt Filter
 
         return http.build();
-
     }
 
     @Bean

@@ -1,22 +1,15 @@
 package com.exampleElecti.Electi.service;
 
-/*
-*
-* @Author: Juan Cervantes
-* @Date: 1/23/2025
-* @About: Service to implement python phe script
-*
-* */
-
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /*
 *
@@ -31,47 +24,58 @@ import java.util.concurrent.CompletableFuture;
 public class PythonService {
 
     @Async//Using asyncronous tasks
-    public CompletableFuture<String> executePythonAsync(String data, String path){//Enables the future component
+    public CompletableFuture<String> executePythonAsync(List<Integer> data, String path){//Enables the future component
         return CompletableFuture.supplyAsync(() -> phePython(data, path));//Does not return when executed
     }
 
-    public String phePython(String data, String path){
-        try{
-            /*
-            * Process Builder class:
-            * Creates an instance process to manage system operations, can be used for control the process and obtain information about it
-            *
-            * CREATES THE PROCESS
-            * */
-            ProcessBuilder processBuilder = new ProcessBuilder("python", path,data);//Creates the instance with the the path and data
-            processBuilder.redirectErrorStream(true);//Both IO messages will be sent on the same stream
+    public String phePython(List<Integer> data, String path) {
+        try {
+            // Create the ProcessBuilder instance
+            ProcessBuilder processBuilder = new ProcessBuilder("python", path);
+            processBuilder.redirectErrorStream(true); // Combine stdout and stderr
 
-            Process process = processBuilder.start(); //Start the process
+            // Start the process
+            Process process = processBuilder.start();
 
-            //Tries to write the data on the inputStream direct to python file
-            try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))){
-                writer.write(data);
+            // Convert the list to JSON using Gson
+            String jsonData = "[" + data.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(",")) + "]";
+
+            // Write the JSON data to the Python process's input stream
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))) {
+                writer.write(jsonData);
                 writer.newLine();
                 writer.flush();
             }
 
-            //Get the output of the process
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            //A stringBuilder (super string constructor, less resources taken)
+            // Read the output of the process
             StringBuilder output = new StringBuilder();
-
-            String line;
-            while((line = reader.readLine())!=null){//While the file its not at the end of file
-                output.append(line).append("\n");//The stringBuilder will append the code in the python script
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
             }
 
-            process.waitFor();//Waits till the subProcess ends its cycle
+            // Capture errors from the Python script
+            StringBuilder errorOutput = new StringBuilder();
+            try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+                String errorLine;
+                while ((errorLine = errorReader.readLine()) != null) {
+                    errorOutput.append(errorLine).append("\n");
+                }
+            }
 
-            return output.toString().trim();//Returns the output of the process
+            // Wait for the process to complete
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new RuntimeException("Python script exited with code " + exitCode + ". Error output: " + errorOutput);
+            }
 
-
-        } catch(Exception e){//Fallback in case of error
+            // Return the output of the process
+            return output.toString().trim();
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

@@ -1,51 +1,29 @@
 # @Author: Juan Cervantes
-# @Date: 1/23/2025
+# @Date: 1/29/2025
 # @About: Encrypting the data
 
-# Partial Homomorphic Encryption
-# Se usa parcialmente ya que solo permite suma y multiplicación
-# En términos simples permite agregar una operación a los datos cifrados sin la necesidad de descifrar
-
-from phe import paillier
+import tenseal as ts
 import sys
+import json
 
-def run():
-    # Genera la llave pública para encriptar los datos
-    # Y la llave privada para desencriptarlos
-    public_key, private_key = paillier.generate_paillier_keypair()
+# Configurar el contexto de TenSEAL (CKKS)
+context = ts.context(ts.SCHEME_TYPE.CKKS, poly_modulus_degree=8192, coeff_mod_bit_sizes=[60, 40, 40, 60])
+context.global_scale = 2**40
+context.generate_galois_keys()
 
-    # Leer datos desde la entrada estándar o interactiva
-    try:
-        input_data = input("Introduce dos números separados por un espacio (por ejemplo: 5 3): ").strip()
-        plaintext1, plaintext2 = map(int, input_data.split())
-    except Exception as e:
-        print(f"Error en la entrada de datos: {e}")
-        return
+# Datos a encriptar
+data = sys.stdin.read().strip()
 
-    # Encripta los textos planos con la llave pública
-    encrypted1 = public_key.encrypt(plaintext1)
-    encrypted2 = public_key.encrypt(plaintext2)
+dataList = json.loads(data)
 
-    # Muestra los valores encriptados
-    print("Encrypted Values:")
-    print(f"Ciphertext 1: {encrypted1}")
-    print(f"Ciphertext 2: {encrypted2}")
+# Encriptar los datos
+enc_data = ts.ckks_vector(context, dataList)
 
-    # Encripta los datos sumándolos entre sí sin la necesidad de desencriptar
-    encrypted_sum = encrypted1 + encrypted2
+# Operación homomórfica: multiplicación por 2
+enc_result = enc_data * 89
 
-    # Encripta uno solo de los datos con una multiplicación por un escalar
-    plaintext_scalar = 2
-    encrypted_scaled = encrypted1 * plaintext_scalar
+# Descifrar el resultado
+dec_result = enc_result.decrypt()
 
-    # Decripta los resultados con la llave privada
-    decrypted_sum = private_key.decrypt(encrypted_sum)
-    decrypted_scaled = private_key.decrypt(encrypted_scaled)
-
-    # Muestra los datos desencriptados
-    print("\nDecrypted Results:")
-    print(f"Decrypted Sum ({plaintext1} + {plaintext2}): {decrypted_sum}")
-    print(f"Decrypted Scaled ({plaintext1} * {plaintext_scalar}): {decrypted_scaled}")
-
-if __name__ == "__main__":#Main Function
-    run()
+print("Datos originales:", data)
+print("Resultado cifrado:", dec_result)
